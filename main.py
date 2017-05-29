@@ -54,9 +54,6 @@ def build_optimizer_graph():
     grad_f = tf.placeholder(tf.float32, [n_dimension, 1])
 
     cell_list = []
-    print('debugging')
-    print(hidden_size)
-    print(num_layers)
     for i in range(num_of_coordinates):
         cell_list.append(
             tf.contrib.rnn.MultiRNNCell([tf.contrib.rnn.BasicLSTMCell(hidden_size, reuse=tf.get_variable_scope().reuse)
@@ -68,9 +65,6 @@ def build_optimizer_graph():
         cell = cell_list[i]
         state = state_list[i]
         grad_h_t = tf.slice(grad_f, begin=[i, 0], size=[1, 1])
-        print('Debugging')
-        print(grad_h_t.shape)
-        print(state)
 
         for k in range(n_unroll_in_m):
             if k > 0: tf.get_variable_scope().reuse_variables()
